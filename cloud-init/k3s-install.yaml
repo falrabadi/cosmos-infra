@@ -1,0 +1,10 @@
+#cloud-config
+# Runs on the server's first boot. Installs k3s (lightweight Kubernetes).
+package_update: true
+package_upgrade: true
+
+runcmd:
+  # Install k3s. This brings up a single-node Kubernetes cluster.
+  - curl -sfL https://get.k3s.io | sh -
+  # After boot, the kubeconfig lives at /etc/rancher/k3s/k3s.yaml on the server.
+  # Copy it locally (replacing the server IP) to run kubectl against the cluster.

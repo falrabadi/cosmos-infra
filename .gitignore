@@ -1,0 +1,40 @@
+# ───────────────────────────────────────────────
+# Terraform — these hold secrets and infra state.
+# NEVER commit them.
+# ───────────────────────────────────────────────
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# NOTE: .terraform.lock.hcl is intentionally NOT ignored — it locks
+# provider versions and SHOULD be committed (it's a lockfile, not a secret).
+
+# ───────────────────────────────────────────────
+# Kubernetes / cluster access
+# ───────────────────────────────────────────────
+kubeconfig
+*.kubeconfig
+kube.config
+
+# ───────────────────────────────────────────────
+# Secrets / keys
+# ───────────────────────────────────────────────
+*.pem
+*.key
+.env
+.env.*
+!.env.example
+
+# ───────────────────────────────────────────────
+# OS
+# ───────────────────────────────────────────────
+.DS_Store
