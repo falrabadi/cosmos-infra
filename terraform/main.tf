@@ -1,45 +1,31 @@
-resource "hcloud_ssh_key" "default" {
-  name       = "${var.server_name}-key"
-  public_key = var.ssh_public_key
+resource "azurerm_resource_group" "cosmos" {
+  name     = var.resource_group_name
+  location = var.location
 }
 
-resource "hcloud_firewall" "k3s" {
-  name = "${var.server_name}-fw"
+resource "azurerm_kubernetes_cluster" "cosmos" {
+  name                = var.cluster_name
+  location            = azurerm_resource_group.cosmos.location
+  resource_group_name = azurerm_resource_group.cosmos.name
+  dns_prefix          = var.cluster_name
+  kubernetes_version  = var.kubernetes_version
 
-  # SSH — restricted to your IP only.
-  rule {
-    direction  = "in"
-    protocol   = "tcp"
-    port       = "22"
-    source_ips = [var.allowed_ssh_ip]
+  # Free control-plane tier — $0 for the managed control plane (no uptime SLA).
+  sku_tier = "Free"
+
+  default_node_pool {
+    name            = "default"
+    node_count      = var.node_count
+    vm_size         = var.node_vm_size
+    os_disk_size_gb = 32
   }
 
-  # HTTP — open to the world (ingress).
-  rule {
-    direction  = "in"
-    protocol   = "tcp"
-    port       = "80"
-    source_ips = ["0.0.0.0/0", "::/0"]
+  # Managed identity for the cluster — no service principal secret to rotate.
+  identity {
+    type = "SystemAssigned"
   }
 
-  # HTTPS — open to the world (ingress).
-  rule {
-    direction  = "in"
-    protocol   = "tcp"
-    port       = "443"
-    source_ips = ["0.0.0.0/0", "::/0"]
+  tags = {
+    project = "cosmos"
   }
-}
-
-resource "hcloud_server" "k3s" {
-  name        = var.server_name
-  server_type = var.server_type
-  location    = var.location
-  image       = "ubuntu-24.04"
-
-  ssh_keys     = [hcloud_ssh_key.default.id]
-  firewall_ids = [hcloud_firewall.k3s.id]
-
-  # Installs k3s on first boot.
-  user_data = file("${path.module}/../cloud-init/k3s-install.yaml")
 }

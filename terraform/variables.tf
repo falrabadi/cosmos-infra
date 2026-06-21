@@ -1,33 +1,40 @@
-variable "hcloud_token" {
-  description = "Hetzner Cloud API token. Provide via TF_VAR_hcloud_token env var or a gitignored *.tfvars file. NEVER commit this."
+variable "subscription_id" {
+  description = "Azure subscription ID. Get it with: az account show --query id -o tsv"
   type        = string
-  sensitive   = true
 }
 
-variable "server_name" {
-  description = "Name of the k3s server."
+variable "resource_group_name" {
+  description = "Name of the resource group to create."
   type        = string
-  default     = "cosmos-k3s"
-}
-
-variable "server_type" {
-  description = "Hetzner server type. cx22 is the cheapest shared-vCPU option (2 vCPU / 4GB)."
-  type        = string
-  default     = "cx22"
+  default     = "cosmos-rg"
 }
 
 variable "location" {
-  description = "Hetzner datacenter location (nbg1 = Nuremberg, fsn1 = Falkenstein, hel1 = Helsinki)."
+  description = "Azure region. Note: this subscription can't use B-series in the big US regions (eastus/westus/etc.); northcentralus and westcentralus allow it."
   type        = string
-  default     = "nbg1"
+  default     = "northcentralus"
 }
 
-variable "ssh_public_key" {
-  description = "SSH public key used for server access."
+variable "cluster_name" {
+  description = "Name of the AKS cluster."
   type        = string
+  default     = "cosmos-aks"
 }
 
-variable "allowed_ssh_ip" {
-  description = "CIDR allowed to SSH in, e.g. 1.2.3.4/32. Lock this to your own IP."
+variable "kubernetes_version" {
+  description = "Kubernetes version. Leave null to use the AKS default for the region."
   type        = string
+  default     = null
+}
+
+variable "node_count" {
+  description = "Number of nodes in the default node pool."
+  type        = number
+  default     = 1
+}
+
+variable "node_vm_size" {
+  description = "Node VM size. Standard_B2als_v2 = 2 vCPU / 4 GiB (AKS minimum, cheapest x86/AMD)."
+  type        = string
+  default     = "Standard_B2als_v2"
 }

@@ -1,6 +1,14 @@
 # Copy this file to terraform.tfvars and fill in your values.
-# terraform.tfvars is gitignored and must NEVER be committed — it holds secrets.
+# terraform.tfvars is gitignored and must NEVER be committed.
+#
+# Azure authentication is handled by the Azure CLI — run `az login` first.
+# No client secret is stored here.
 
-hcloud_token   = "your-hetzner-cloud-api-token"
-ssh_public_key = "ssh-ed25519 AAAA... you@host"
-allowed_ssh_ip = "1.2.3.4/32"
+subscription_id = "your-azure-subscription-id" # az account show --query id -o tsv
+
+# Optional overrides (defaults shown):
+# resource_group_name = "cosmos-rg"
+# location            = "northcentralus"
+# cluster_name        = "cosmos-aks"
+# node_vm_size        = "Standard_B2als_v2"
+# node_count          = 1
