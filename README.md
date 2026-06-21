@@ -27,7 +27,7 @@ environments/
 ## Why this shape
 
 - **`modules/aks`** holds the cluster definition once. Environments are just
-  *inputs* to it (node count, VM size, region). No duplicated resource blocks.
+  _inputs_ to it (node count, VM size, region). No duplicated resource blocks.
 - **`environments/<env>`** each has its **own state** (own backend `key`), so an
   `int` apply can never read or corrupt `stage`/`prod` state.
 - **Adding a lower environment is a recipe, not a rewrite:** copy
@@ -37,10 +37,10 @@ environments/
 
 ## Environments
 
-| Env | Status | Notes |
-|---|---|---|
-| `int` | active | the only one provisioned right now, to keep cost down |
-| `stage` / `prod` | not created | add via the recipe above when needed |
+| Env              | Status      | Notes                                                 |
+| ---------------- | ----------- | ----------------------------------------------------- |
+| `int`            | active      | the only one provisioned right now, to keep cost down |
+| `stage` / `prod` | not created | add via the recipe above when needed                  |
 
 ## Cost
 
@@ -76,4 +76,8 @@ kubectl get nodes
 - Remote state should live in an Azure Storage account, configured per env in
   `environments/<env>/versions.tf` with a distinct `key`. **Until that's wired
   up, CI `apply` won't persist state between runs — apply from local for now.**
+
+```
+
+test pr
 ```
