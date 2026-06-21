@@ -8,15 +8,15 @@ terraform {
     }
   }
 
-  # Remote state backend.
-  # State holds secrets and the full map of your infra — it must NOT live in git.
-  # Point this at an Azure Storage account once it exists:
+  # Remote state — each environment gets its OWN state file (own `key`),
+  # so an int apply can never read or corrupt stage/prod state.
+  # Uncomment once the Azure Storage backend exists:
   #
   # backend "azurerm" {
   #   resource_group_name  = "cosmos-tfstate-rg"
   #   storage_account_name = "cosmostfstate"
   #   container_name       = "tfstate"
-  #   key                  = "infra.terraform.tfstate"
+  #   key                  = "int.terraform.tfstate"
   # }
 }
 

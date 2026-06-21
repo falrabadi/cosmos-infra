@@ -3,7 +3,9 @@ name: Terraform Plan
 on:
   pull_request:
     branches: [master]
-    paths: ['terraform/**']
+    paths:
+      - 'environments/**'
+      - 'modules/**'
 
 # OIDC login to Azure — passwordless, no stored client secret.
 # Requires an Azure AD app with a federated credential + these repo secrets:
@@ -17,9 +19,15 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: terraform
+        working-directory: environments/int
     steps:
       - uses: actions/checkout@v4
+
+      # fmt is a repo-wide check (modules + every environment), so run it from root.
+      - uses: hashicorp/setup-terraform@v3
+      - name: Format check (modules + environments)
+        run: terraform fmt -check -recursive
+        working-directory: ${{ github.workspace }}
 
       - name: Azure login (OIDC)
         uses: azure/login@v2
@@ -28,13 +36,8 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - uses: hashicorp/setup-terraform@v3
-
       - name: Init
         run: terraform init
-
-      - name: Format check
-        run: terraform fmt -check
 
       - name: Validate
         run: terraform validate

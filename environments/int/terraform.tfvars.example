@@ -1,0 +1,5 @@
+# Copy this file to terraform.tfvars and fill in your value.
+# terraform.tfvars is gitignored and must NEVER be committed.
+#
+# Azure auth is via `az login` (local) or OIDC (CI) — no client secret here.
+subscription_id = "your-azure-subscription-id" # az account show --query id -o tsv

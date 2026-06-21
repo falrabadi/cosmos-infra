@@ -1,6 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-# Shared manifests for ALL environments go here (Deployments, Services, etc.).
-# Overlays in ../overlays patch these per environment.
-resources: []

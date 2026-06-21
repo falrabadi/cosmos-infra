@@ -2,6 +2,13 @@ name: Terraform Apply
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to apply'
+        type: choice
+        options:
+          - int
+        default: int
 
 # OIDC login to Azure — passwordless, no stored client secret.
 # Requires an Azure AD app with a federated credential + these repo secrets:
@@ -13,10 +20,12 @@ permissions:
 jobs:
   apply:
     runs-on: ubuntu-latest
-    environment: production
+    # GitHub Environment gate: apply pauses here until a required reviewer
+    # approves. Self-review is allowed, so this works as a solo operator.
+    environment: ${{ inputs.environment }}
     defaults:
       run:
-        working-directory: terraform
+        working-directory: environments/${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v4
 
