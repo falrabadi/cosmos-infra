@@ -3,9 +3,6 @@ name: Terraform Plan
 on:
   pull_request:
     branches: [master]
-    paths:
-      - 'environments/**'
-      - 'modules/**'
 
 # OIDC login to Azure — passwordless, no stored client secret.
 # Requires an Azure AD app with a federated credential + these repo secrets:

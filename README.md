@@ -76,4 +76,3 @@ kubectl get nodes
 - Remote state should live in an Azure Storage account, configured per env in
   `environments/<env>/versions.tf` with a distinct `key`. **Until that's wired
   up, CI `apply` won't persist state between runs — apply from local for now.**
-```
