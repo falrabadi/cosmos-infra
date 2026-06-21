@@ -1,4 +1,9 @@
 # ───────────────────────────────────────────────
+# Scratch dir for one-time OIDC setup files (not secret, just clutter).
+# ───────────────────────────────────────────────
+.oidc-setup/
+
+# ───────────────────────────────────────────────
 # Terraform — these hold secrets and infra state.
 # NEVER commit them.
 # ───────────────────────────────────────────────
