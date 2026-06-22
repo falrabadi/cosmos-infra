@@ -13,8 +13,8 @@ terraform {
   # Uncomment once the Azure Storage backend exists:
   #
   # backend "azurerm" {
-  #   resource_group_name  = "cosmos-tfstate-rg"
-  #   storage_account_name = "cosmostfstate"
+  #   resource_group_name  = "crimson-tfstate-rg"
+  #   storage_account_name = "crimsontfstate"
   #   container_name       = "tfstate"
   #   key                  = "int.terraform.tfstate"
   # }

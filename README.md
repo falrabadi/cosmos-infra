@@ -1,10 +1,10 @@
-# cosmos-infra — platform tier
+# crimson-infra — platform tier
 
-Infrastructure-as-Code for the **platform** the Cosmos services run on: the
+Infrastructure-as-Code for the **platform** the Crimson services run on: the
 Azure resource group + AKS (managed Kubernetes) cluster, one per environment.
 
 This repo does **not** deploy application code. That's the **app tier**, which
-lives next to each service (`cosmos-api/iac/<env>/`) and deploys onto the
+lives next to each service (`crimson-api/iac/<env>/`) and deploys onto the
 cluster this repo provisions. The seam between the two tiers is the cluster:
 this repo creates it; the app tier connects to it.
 
@@ -61,7 +61,7 @@ terraform plan
 terraform apply
 
 # Point kubectl at the new cluster (the apply output prints this command):
-az aks get-credentials --resource-group cosmos-int-rg --name cosmos-int-aks
+az aks get-credentials --resource-group crimson-int-rg --name crimson-int-aks
 kubectl get nodes
 ```
 

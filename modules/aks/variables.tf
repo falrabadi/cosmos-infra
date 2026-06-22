@@ -4,9 +4,9 @@ variable "environment" {
 }
 
 variable "name_prefix" {
-  description = "Prefix for resource names. Combined with environment, e.g. cosmos-int-rg."
+  description = "Prefix for resource names. Combined with environment, e.g. crimson-int-rg."
   type        = string
-  default     = "cosmos"
+  default     = "crimson"
 }
 
 variable "location" {
